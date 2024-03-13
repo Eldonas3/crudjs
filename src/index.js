@@ -20,6 +20,9 @@ mongoose.Promise = global.Promise;
 // Agregamos los archivos de rutas
 var categoriaRoutes = require('./routes/categoria');
 var clienteRoutes = require('./routes/cliente');
+var proveedorRoutes = require('./routes/proveedor');
+var membresiaRoutes = require('./routes/membresia');
+var productoRoutes = require('./routes/producto');
 
 // Cargamos body parser
 app.use(bodyParser.urlencoded({extended:false}));
@@ -41,6 +44,9 @@ app.use((req,res,next)=>{
 // cargamos los archivos de la ruta de la app:
 app.use('/api',categoriaRoutes);
 app.use('/api',clienteRoutes);
+app.use('/api',proveedorRoutes);
+app.use('/api',membresiaRoutes);
+app.use('/api',productoRoutes);
 
 mongoose.connect(url, {useNewUrlParser: true}).then(() => {
     console.log('Conexión a la bd realizada con exito!!')
