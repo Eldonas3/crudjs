@@ -23,7 +23,7 @@ btn.onclick = () => {
 }
 
 async function postData(nombre, descripcion) {
-    const response = await fetch('/api/save', {
+    const response = await fetch('/api/crear', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
