@@ -3,9 +3,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 const port = 3000;
+
+
+//Archivos estáticos:
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 const url = "mongodb://localhost:27017/tienda";
 // Configuracion para evitar fallo de conexion
 mongoose.Promise = global.Promise;
