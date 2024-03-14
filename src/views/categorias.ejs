@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Categorías</title>
+    <!-- Agrega cualquier estilo CSS adicional aquí -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+}
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Gestión de Categorías</h2>
+    <div id="mensaje"></div>
+    <form id="formulario">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+        <button type="submit">Guardar Categoría</button>
+    </form>
+
+    <!-- Agrega cualquier script JavaScript adicional aquí -->
+    <script>
+        // Agrega tu lógica JavaScript aquí para enviar los datos al controlador
+        const formulario = document.getElementById('formulario');
+        formulario.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const nombre = document.getElementById('nombre').value;
+            const descripcion = document.getElementById('descripcion').value;
+            
+            // Enviar los datos al servidor utilizando fetch
+            fetch('api/crear', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    descripcion: descripcion
+                })})
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar mensaje de éxito o error
+                const mensaje = document.getElementById('mensaje');
+                if (data.status === 'success') {
+                    mensaje.textContent = 'Categoría guardada correctamente';
+                    mensaje.style.color = 'green';
+                } else {
+                    mensaje.textContent = 'Error al guardar la categoría';
+                    mensaje.style.color = 'red';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

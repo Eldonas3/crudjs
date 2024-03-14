@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const consolidate = require('consolidate');
 
 const app = express();
 const port = 3000;
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const url = "mongodb://localhost:27017/tienda";
 // Configuracion para evitar fallo de conexion
 mongoose.Promise = global.Promise;
+
 
 // Agregamos los archivos de rutas
 var categoriaRoutes = require('./routes/categoria');
@@ -47,6 +49,20 @@ app.use('/api',clienteRoutes);
 app.use('/api',proveedorRoutes);
 app.use('/api',membresiaRoutes);
 app.use('/api',productoRoutes);
+
+
+// Configurar la carpeta de vistas
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Ruta para servir la vista
+app.get('/', (req, res) => {
+  res.render('categorias', {});
+});
+
 
 mongoose.connect(url, {useNewUrlParser: true}).then(() => {
     console.log('Conexión a la bd realizada con exito!!')
